@@ -2,7 +2,7 @@
  * Problem Statement:
  * Given two numbers `n1` and `n2`, write a function that returns 
  * the number of carry operations required to add them digit-by-digit,
- * similar to pen-and-paper arithmetic with a one being carried as
+ * similar to pen-and-paper arithmetic with a `1` being carried as
  * the digits are added column-wise right-to-left, like this:
  * 
  *      49
@@ -10,9 +10,9 @@
  *    ----
  *     104
  * 
- * The right-most column is 9+5=14, which two digits so we carry the one.
- * The left-most column is 4+5=9, but receives the carried one.
- * One carry happened, so `f(49, 55)` is `1`.
+ * The right-most column is 9+5=14, which is two digits, so we carry the `1` and write `4`.
+ * The left-most column is 4+5=9, but receives the carried `1`, so we write `10` in front.
+ * In the end, we wrote `104`, and one carry operation happened, so `f(49, 55)` is `1`.
  * More tests are below.
  */
 
