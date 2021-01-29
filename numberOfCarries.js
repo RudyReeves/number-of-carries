@@ -10,9 +10,15 @@
  *    ----
  *     104
  * 
- * The right-most column is 9+5=14, which is two digits, so we carry the `1` and write `4`.
- * The left-most column is 4+5=9, but receives the carried `1`, so we write `10` in front.
- * In the end, we wrote `104`, and one carry operation happened, so `f(49, 55)` is `1`.
+ * The right-most column is 9+5=14, which is two digits,
+ *      so we carry the `1` and write `4`. That's a carry operation.
+ * 
+ * The left-most column is 4+5=9, but we add the carried `1`,
+ *      so we write `10` before `4`.
+ * 
+ * In the end, we wrote `104`, and a single carry operation happened,
+ *      so `f(49, 55)` is `1`.
+ * 
  * More tests are below.
  */
 
@@ -32,8 +38,7 @@ const f = (n1, n2) => {
     for (; i < minLength; i++) {
         const e1 = digits1[i] || 0;
         const e2 = digits2[i] || 0;
-        const sum = e1 + e2;
-        if (sum >= 10) {
+        if (e1 + e2 >= 10) { // Check if this pair sums to two digits
             carry++;
         }
     }
