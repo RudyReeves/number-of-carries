@@ -24,36 +24,39 @@
 
  // Here's my solution in JavaScript which is O(n):
 
+ // Helper functions:
+
+ const indexes = arr => arr.map((_, i) => i);
+
+ const getDigits = n => n.toString().split('').map(Number);
+
+ const getArithmeticRows = (n1, n2) =>
+    [n1, n2].map(n => getDigits(n).reverse());
+
  /***
   * `f(n1, n2)` takes two integers and returns the integer number
   * of carries required to add `n1` and `n2`.
   */
  const numberOfCarryOperations = (n1, n2) => {
-    const digits1 = getDigits(n1).reverse();
-    const digits2 = getDigits(n2).reverse();
-    let carry = 0;
-    const maxLength = Math.max(digits1.length, digits2.length);
-    for (let i = 0; i < maxLength; i++) {
-        const d1 = digits1[i] || 0;
-        const d2 = digits2[i] || 0;
-        if (
-            (d1 + d2 >= 10)
-            || (d1 === 9 && carry !== 0)
-            || (d2 === 9 && carry !== 0)
-        ) {
-            carry++;
-        }
-    }
-    return carry;
+    const rows = getArithmeticRows(n1, n2), [row1, row2] = rows;
+    return ((row1.length > row2.length)
+        ? indexes(row1) : indexes(row2))
+        .reduce((partialCarry, _, i) => {
+            const [d1, d2] = rows.map(row => row[i] || 0);
+            return partialCarry + (
+                ((d1 + d2 >= 10)
+                || (d1 === 9 && partialCarry !== 0)
+                || (d2 === 9 && partialCarry !== 0))
+                ? 1 : 0
+            );
+        }, 0);
 };
-
-const getDigits = (n) => ('' + n).split('').map(Number);
 
 // Tests:
 
 console.log(numberOfCarryOperations(44, 56)); // pass (1)
 console.log(numberOfCarryOperations(9999, 1)); // pass (4)
-console.log(numberOfCarryOperations(1, 9999)); // pass (1)
+console.log(numberOfCarryOperations(1, 9999)); // pass (4)
 console.log(numberOfCarryOperations(55, 49)); // pass (1)
 console.log(numberOfCarryOperations(50, 49)); // pass (0)
 console.log(numberOfCarryOperations(12345, 4)); // pass (0)
